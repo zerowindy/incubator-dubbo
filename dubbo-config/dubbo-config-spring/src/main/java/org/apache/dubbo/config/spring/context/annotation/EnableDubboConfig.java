@@ -59,7 +59,7 @@ import java.lang.annotation.Target;
  *
  * @see EnableDubboConfigBinding
  * @see DubboConfigConfiguration
- * @see DubboConfigConfigurationSelector
+ * @see DubboConfigConfigurationRegistrar
  * @since 2.5.8
  */
 @Target({ElementType.TYPE})
@@ -72,9 +72,9 @@ public @interface EnableDubboConfig {
     /**
      * It indicates whether binding to multiple Spring Beans.
      *
-     * @return the default value is <code>false</code>
+     * @return the default value is <code>true</code>
      * @revised 2.5.9
      */
-    boolean multiple() default false;
+    boolean multiple() default true;
 
 }
