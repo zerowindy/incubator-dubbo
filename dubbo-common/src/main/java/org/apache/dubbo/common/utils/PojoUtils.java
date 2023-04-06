@@ -16,10 +16,6 @@
  */
 package org.apache.dubbo.common.utils;
 
-import org.apache.dubbo.common.constants.CommonConstants;
-import org.apache.dubbo.common.logger.Logger;
-import org.apache.dubbo.common.logger.LoggerFactory;
-
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -33,6 +29,9 @@ import java.lang.reflect.Proxy;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 import java.lang.reflect.WildcardType;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -53,6 +52,10 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+
+import org.apache.dubbo.common.constants.CommonConstants;
+import org.apache.dubbo.common.logger.Logger;
+import org.apache.dubbo.common.logger.LoggerFactory;
 
 import static org.apache.dubbo.common.utils.ClassUtils.isAssignableFrom;
 
@@ -133,6 +136,10 @@ public class PojoUtils {
 
         if (ReflectUtils.isPrimitives(pojo.getClass())) {
             return pojo;
+        }
+        
+        if (pojo instanceof LocalDate || pojo instanceof LocalDateTime || pojo instanceof LocalTime) {
+            return pojo.toString();
         }
 
         if (pojo instanceof Class) {
@@ -406,6 +413,7 @@ public class PojoUtils {
                 } catch (ClassNotFoundException e) {
                     // ignore
                 }
+                SerializeClassChecker.getInstance().validateClass(type);
             }
 
             // special logic for enum
